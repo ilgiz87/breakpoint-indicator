@@ -1,0 +1,55 @@
+// Переменные брейкпоинтов Bootstrap 5
+$breakpoints: (
+  "xs": 0,
+  "sm": 576px,
+  "md": 768px,
+  "lg": 992px,
+  "xl": 1200px,
+  "xxl": 1400px
+);
+
+
+$breakpoint-styles: (
+  "xs":  (content: "XS", bg: #6c757d, color: white),
+  "sm":  (content: "SM", bg: #28a745, color: white),
+  "md":  (content: "MD", bg: #17a2b8, color: white),
+  "lg":  (content: "LG", bg: #ffc107, color: #000),
+  "xl":  (content: "XL", bg: #6f42c1, color: white),
+  "xxl": (content: "XXL", bg: #dc3545, color: white)
+);
+
+
+$indicator-opacity: 0.5;
+
+body:before {
+  content: map-get($breakpoint-styles, "xs", "content");
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(map-get($breakpoint-styles, "xs", "bg"), $indicator-opacity);
+  color: map-get($breakpoint-styles, "xs", "color");
+  padding: 0.5rem 1rem;
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 0.5rem;
+  z-index: 10000;
+  pointer-events: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  display: inline-block;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(2px);
+}
+
+
+@each $name, $width in $breakpoints {
+  @if $name != "xs" {
+    @media (min-width: $width) {
+      body:before {
+        content: map-get($breakpoint-styles, $name, "content");
+        background: rgba(map-get($breakpoint-styles, $name, "bg"), $indicator-opacity);
+        color: map-get($breakpoint-styles, $name, "color");
+      }
+    }
+  }
+}
